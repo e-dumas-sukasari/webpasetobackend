@@ -1,4 +1,4 @@
-module webpasetobackend
+module github.com/e-dumas-sukasari/webpasetobackend
 
 go 1.21.2
 
