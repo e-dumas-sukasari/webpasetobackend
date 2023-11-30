@@ -8,6 +8,7 @@ import (
 	"github.com/aiteung/atdb"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	
 )
 
 func MongoCreateConnection(MongoString, dbname string) *mongo.Database {
@@ -17,6 +18,24 @@ func MongoCreateConnection(MongoString, dbname string) *mongo.Database {
 	}
 	conn := atdb.MongoConnect(MongoInfo)
 	return conn
+}
+
+func InsertReportData(conn *mongo.Database, colname string, report *Report) error {
+	collection := conn.Collection(colname)
+
+	_, err := collection.InsertOne(context.TODO(), Report{
+		Title:        report.Title,
+		Description:  report.Description,
+		DateOccurred: report.DateOccurred,
+		FileData:     report.FileData, // Include the binary file data
+		// Add other fields as needed
+	})
+
+	if err != nil {
+		return fmt.Errorf("error inserting report data: %v", err)
+	}
+
+	return nil
 }
 
 func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (insertedID interface{}) {
