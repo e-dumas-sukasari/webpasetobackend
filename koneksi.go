@@ -21,21 +21,14 @@ func MongoCreateConnection(MongoString, dbname string) *mongo.Database {
 }
 
 func InsertReportData(conn *mongo.Database, colname string, report *Report) error {
-	collection := conn.Collection(colname)
+    collection := conn.Collection(colname)
 
-	_, err := collection.InsertOne(context.TODO(), Report{
-		Title:        report.Title,
-		Description:  report.Description,
-		DateOccurred: report.DateOccurred,
-		FileData:     report.FileData, // Include the binary file data
-		// Add other fields as needed
-	})
+    _, err := collection.InsertOne(context.TODO(), report)
+    if err != nil {
+        return err
+    }
 
-	if err != nil {
-		return fmt.Errorf("error inserting report data: %v", err)
-	}
-
-	return nil
+    return nil
 }
 
 func InsertOneDoc(db *mongo.Database, collection string, doc interface{}) (insertedID interface{}) {

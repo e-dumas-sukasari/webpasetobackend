@@ -3,10 +3,10 @@ package webpasetobackend
 import "time"
 
 type Report struct {
-	Title        string `json:"title"`
-	Description  string `json:"description"`
-	DateOccurred string `json:"dateOccurred"`
-	FileData     []byte `json:"fileData"` // Binary file data
+    Title         string `json:"title"`
+    Description   string `json:"description"`
+    DateOccurred  string `json:"dateOccurred"`
+    FileAttachment string `json:"fileAttachment"`
 }
 
 type User struct {
